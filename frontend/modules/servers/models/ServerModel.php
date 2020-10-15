@@ -87,7 +87,10 @@ SQL;
             $id = (int)$row['provider_id'];
             if ($providers->containsKey($id))
             {
-                $providers[$id][] = $row['address'];
+                if (!isset($providers[$id]))
+                    $providers[$id][] = $row['address'];
+                else
+                    $providers->add($id, array($row['address']));
             }
             else
             {
