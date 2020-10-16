@@ -353,7 +353,7 @@ class Snapshot extends GameResult
                 $sql = "SELECT lastip, country, rank_id, killstreak, deathstreak, bestscore, permban, bantime FROM player WHERE id=%d LIMIT 1";
                 $row = $connection->query(sprintf($sql, $player->id))->fetch();
 
-                // If player does not exist, stop here!
+                // If player does not exist, warn us about it
                 if (empty($row))
                 {
                     // Is this a Cross Service Exploitation?
@@ -372,7 +372,7 @@ class Snapshot extends GameResult
 
                     // Write log
                     $this->logWriter->logError($message);
-                    throw new Exception($message);
+                    // throw new Exception($message); // Don't stop here
                 }
                 else
                 {
@@ -389,7 +389,7 @@ class Snapshot extends GameResult
                     {
                         $message = sprintf("Banned Player Found in Snapshot: %s (%d)!", $player->name, $player->id);
                         $this->logWriter->logError($message);
-                        throw new Exception($message);
+                        // throw new Exception($message);  // Don't stop here
                     }
                 }
             }
