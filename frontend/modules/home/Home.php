@@ -36,6 +36,16 @@ class Home extends Controller
         // Load model
         $this->loadModel('HomeModel', 'home');
 
+        // check to see if the function apache_get_version exists
+        // If it doesn’t, then we create a custom function that returns whatever string is stored in the SERVER_SOFTWARE superglobals variable.
+        if(!function_exists('apache_get_version')){
+            function apache_get_version(){
+                if(!isset($_SERVER['SERVER_SOFTWARE']) || strlen($_SERVER['SERVER_SOFTWARE']) == 0){
+                    return false;
+                }
+                return $_SERVER["SERVER_SOFTWARE"];
+            }
+        }
         // Create view
         $view = new View('index', 'home');
         $view->set('php_version', PHP_VERSION);
